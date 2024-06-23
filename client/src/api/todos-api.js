@@ -1,10 +1,11 @@
 import Axios from 'axios'
+import { apiEndpoint } from '../config.ts'
 
 export async function getTodos(idToken) {
   console.log('Fetching todos')
 
   const response = await Axios.get(
-    `${process.env.REACT_APP_API_ENDPOINT}/todos`,
+    `${apiEndpoint}/todos`,
     {
       headers: {
         'Content-Type': 'application/json',
@@ -18,7 +19,7 @@ export async function getTodos(idToken) {
 
 export async function createTodo(idToken, newTodo) {
   const response = await Axios.post(
-    `${process.env.REACT_APP_API_ENDPOINT}/todos`,
+    `${apiEndpoint}/todos`,
     JSON.stringify(newTodo),
     {
       headers: {
@@ -27,12 +28,13 @@ export async function createTodo(idToken, newTodo) {
       }
     }
   )
+
   return response.data.item
 }
 
 export async function patchTodo(idToken, todoId, updatedTodo) {
   await Axios.patch(
-    `${process.env.REACT_APP_API_ENDPOINT}/todos/${todoId}`,
+    `${apiEndpoint}/todos/${todoId}`,
     JSON.stringify(updatedTodo),
     {
       headers: {
@@ -44,7 +46,7 @@ export async function patchTodo(idToken, todoId, updatedTodo) {
 }
 
 export async function deleteTodo(idToken, todoId) {
-  await Axios.delete(`${process.env.REACT_APP_API_ENDPOINT}/todos/${todoId}`, {
+  await Axios.delete(`${apiEndpoint}/todos/${todoId}`, {
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${idToken}`
@@ -54,7 +56,7 @@ export async function deleteTodo(idToken, todoId) {
 
 export async function getUploadUrl(idToken, todoId) {
   const response = await Axios.post(
-    `${process.env.REACT_APP_API_ENDPOINT}/todos/${todoId}/attachment`,
+    `${apiEndpoint}/todos/${todoId}/attachment`,
     '',
     {
       headers: {
